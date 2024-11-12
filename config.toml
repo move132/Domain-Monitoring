@@ -6,3 +6,5 @@ bark_url = ""
 max_send_count = 5 
 # 检测间隔
 check_interval = 120000 
+
+#https://notify.xxxxx.com/ZWQUfXkN3yG25BsV6yVj4o/域名监控服务

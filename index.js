@@ -5,9 +5,9 @@ const toml = require('@iarna/toml');
 
 // 读取配置文件
 const config = getConfig();
-
+const tlds = getTlds()
 // 配置
-const DOMAINS = config.domains || [];
+const DOMAINS = config.domains || ['uisx.ru'];
 const CHECK_INTERVAL = config.check_interval || 5 * 60 * 1000; // 每5分钟检查一次
 const BARK_URL = config.bark_url || '';
 let interval = null;
@@ -27,8 +27,14 @@ async function checkDomains() {
           console.error(`检查 ${domain} 时出错:`, err);
           return;
         }
+        const suffix = domain.split('.').pop()
+        const { statusMessage } = tlds.find(v => v.domainSuffix === suffix) || {}
+        if (!statusMessage) {
+          console.log(`tld不存在`);
+          return
+        }
         // console.log(data)
-        if (data.includes('No entries found')) {
+        if (data.includes(statusMessage)) {
           if (MAX_SEND_COUNT <= 0) {
             clearInterval(interval);
             return;
@@ -44,6 +50,31 @@ async function checkDomains() {
     }
   }
 }
+
+function getTlds() {
+
+  const tlds = fs.readFileSync('tld', 'utf8');
+  // 按行分割文本
+  const lines = tlds.split('\n');
+
+  // 创建一个数组来存储结果
+  const results = [];
+
+  // 遍历每一行
+  lines.forEach(line => {
+    // 使用正则表达式匹配域名后缀、WHOIS 服务器和状态信息
+    const match = line.match(/[^=]+/g);
+    if (match) {
+      // 提取域名后缀、WHOIS 服务器和状态信息
+      const domainSuffix = match[0]; // 域名后缀
+      const whoisServer = match[1];   // WHOIS 服务器
+      const statusMessage = match[2]; // 状态信息
+      results.push({ domainSuffix, whoisServer, statusMessage });
+    }
+  });
+  return results
+}
+
 
 function getConfig() {
   try {
