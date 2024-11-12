@@ -28,7 +28,7 @@ COPY --from=builder /app .
 
 # 运行应用
 CMD ["node", "index.js"]
-# docker run -v $(pwd)/config.json:/app/config.json domain-monitor
+# docker run --name=domain -itd -v $(pwd)/config.toml:/app/config.toml domain-monitor
 
 # docker build -t domain-monitor .
 

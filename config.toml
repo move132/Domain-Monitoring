@@ -1,5 +1,5 @@
 # 监听的域名
-domains = ["uc.ru", "ri.ru"] 
+domains = [] 
 # bark通知的url
 bark_url = "" 
 # 成功发送次数，超过此数则不再通知
