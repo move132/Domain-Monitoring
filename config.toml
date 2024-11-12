@@ -1,0 +1,8 @@
+# 监听的域名
+domains = ["uc.ru", "ri.ru"] 
+# bark通知的url
+bark_url = "" 
+# 成功发送次数，超过此数则不再通知
+max_send_count = 5 
+# 检测间隔
+check_interval = 120000 
