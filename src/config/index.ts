@@ -13,7 +13,7 @@ export type Config = {
 
 export function getConfig(): Config {
 	try {
-		const configPath = path.resolve(__dirname, '../../config.toml')
+		const configPath = path.resolve(__dirname, '../config.toml')
 		const fileContents: string = fs.readFileSync(configPath, 'utf8')
 		const config: Config = toml.parse(fileContents) as unknown as Config
 		console.log('🍊初始化的配置o((>ω< ))o:\n')

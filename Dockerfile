@@ -19,8 +19,6 @@ COPY . .
 # 打包应用
 RUN npm run tsup
 
-RUN ls
-
 # 构建第二阶段所需的基础镜像
 FROM node:alpine
 

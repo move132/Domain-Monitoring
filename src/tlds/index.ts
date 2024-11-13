@@ -8,7 +8,7 @@ export interface TldInfo {
 }
 
 export function getTlds(): TldInfo[] {
-	const configPath = path.resolve(__dirname, '../../tld')
+	const configPath = path.resolve(__dirname, '../tld')
 	const tlds: string = fs.readFileSync(configPath, 'utf8')
 	const lines: string[] = tlds.split('\n')
 	const results: TldInfo[] = []

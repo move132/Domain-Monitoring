@@ -5,10 +5,10 @@ export function sendBark({BARK_URL, domain, message = ''}: {BARK_URL: string; do
 	const msg = message || `域名 ${domain} 可注册通知`
 	axios
 		.get(`${BARK_URL}/${encodeURIComponent(msg)}?grounp=域名监听服务`)
-		.then((response) => {
+		.then((response: { statusText: any; }) => {
 			console.log(`Bark 通知发送成功: ${response.statusText}`)
 		})
-		.catch((error) => {
+		.catch((error: any) => {
 			console.error('发送 Bark 通知时出错:', error)
 		})
 }
@@ -24,10 +24,10 @@ export function sendTg({TG_CHAT_ID, TG_BOT_TOKEN, domain, message = ''}: {TG_CHA
 
 	axios
 		.post(url, params)
-		.then((response) => {
+		.then((response: { statusText: any; }) => {
 			console.log(`Telegram 通知发送成功: ${response.statusText}`)
 		})
-		.catch((error) => {
+		.catch((error: any) => {
 			console.error('发送 Telegram 通知时出错:', error)
 		})
 }
