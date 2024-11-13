@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install --production
 
 # 安装 tsup 依赖
-RUN npm install tsup --production
+RUN npm install tsup
 
 # 复制应用代码
 COPY . .
