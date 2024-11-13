@@ -74,6 +74,10 @@ async function checkDomains() {
 }
 
 export function main() {
+  if (CHECK_INTERVAL > 0 && CHECK_INTERVAL < 10 * 1000) {
+    log(`❌ 时间间隔太短，请设置大于10秒的时间间隔`)
+    process.exit(0)
+  }
   // 定时检查
   interval = setInterval(checkDomains, CHECK_INTERVAL)
   checkDomains()
