@@ -6,8 +6,8 @@
 	// 开启 eslint
 	"eslint.enable": true,
 	"editor.codeActionsOnSave": {
-		"source.fixAll": true,
-		"source.fixAll.eslint": true
+		"source.fixAll": "explicit",
+		"source.fixAll.eslint": "explicit"
 	},
 	// 开启 prettier
 	"prettier.enable": true,

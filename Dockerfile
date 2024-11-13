@@ -29,6 +29,8 @@ WORKDIR /app
 COPY --from=builder /app/dist /app/dist
 COPY --from=builder /app/config.toml /app/config.toml
 COPY --from=builder /app/tld /app/tld
+COPY --from=builder /app/package*.json ./
+RUN npm install --production
 
 # 暴露应用的端口（如果需要）
 # EXPOSE 3000
@@ -38,5 +40,3 @@ CMD ["node", "/app/dist/index.cjs"]
 # docker run --name=domain -itd -v $(pwd)/config.toml:/app/config.toml domain-monitor
 
 # docker build -t domain-monitor .
-
-# https://notify.mxcscss.com/ZWds67544o/域名监听/内容内容内容内容内容?grounp=域名监听服务

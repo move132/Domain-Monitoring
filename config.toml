@@ -1,6 +1,6 @@
 # 监听的域名
 domains = [] 
-# bark通知的url
+# bark通知的url https://notify.xxxxx.com/ZWQUfXkN3yG25BsV6yVj4o/域名监控服务
 bark_url = ""
 
 # Telegram 通知
@@ -12,4 +12,3 @@ max_send_count = 5
 # 检测间隔
 check_interval = 120000 
 
-#https://notify.xxxxx.com/ZWQUfXkN3yG25BsV6yVj4o/域名监控服务
