@@ -1,12 +1,6 @@
-# dependencies
-node_modules/
-# production
-build/
-
-# misc
-.DS_Store
-*.pem
-
-
-tmp/
+dist
+node_modules
+package-lock.json
 pnpm-lock.yaml
+.DS_Store
+tool

@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext", /* 输出的代码使用什么方式进行模块化： */
+    "lib": [
+      "esnext",
+      "dom"
+    ], /* 指定引用的标准库 */
+    "esModuleInterop": true,
+    "strict": true, /* 启用所有严格类型检查选项 */
+    "allowJs": true, /* 允许编译 js 文件 */
+    "removeComments": false, /* 输出不包含注释 */
+    "noImplicitAny": true, /* 检查隐含 any 类型的表达式和声明 */
+    "strictNullChecks": false, /* 严格空检查. */
+    "declaration": true, // 根据ts文件自动生成.d.ts声明文件和js文件
+    "declarationDir": "./",
+    "emitDeclarationOnly": true, // 只输出.d.ts声明文件，不生成js文件
+    /* 额外检查 */
+    "noUnusedLocals": true, /* 检查无用的变量. */
+    "types": ["./global.d.ts"], /* 类型声明文件 */
+    "moduleResolution": "node",
+    "baseUrl": "."
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

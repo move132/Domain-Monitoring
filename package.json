@@ -1,18 +1,61 @@
 {
-  "name": "domain",
+  "name": "domain-monitoring",
   "version": "1.0.0",
   "description": "",
-  "main": "listener.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [
+    "tools"
+  ],
+  "homepage": "https://github.com/dense-labs/tool-template",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dense-labs/tool-template"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "author": "move11@126.com",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "lint": "eslint --ext .js,.vue,.ts src",
+    "release": "rollup -c && release-it",
+    "tsup": "tsup"
+  },
   "dependencies": {
     "@iarna/toml": "^2.2.5",
+    "dayjs": "^1.11.13",
     "axios": "^1.7.7",
     "toml": "^3.0.0",
     "whois": "^2.14.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.7",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4"
+  },
+  "engines": {
+    "node": ">= 12.15.0",
+    "npm": ">= 6.13.4"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }

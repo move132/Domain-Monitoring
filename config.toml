@@ -1,7 +1,12 @@
 # 监听的域名
 domains = [] 
 # bark通知的url
-bark_url = "" 
+bark_url = ""
+
+# Telegram 通知
+tg_bot_token = ""
+tg_chat_id = ""
+
 # 成功发送次数，超过此数则不再通知
 max_send_count = 5 
 # 检测间隔

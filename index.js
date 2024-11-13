@@ -7,9 +7,12 @@ const toml = require('@iarna/toml');
 const config = getConfig();
 const tlds = getTlds()
 // 配置
-const DOMAINS = config.domains || ['uisx.ru'];
+const DOMAINS = config.domains || [];
 const CHECK_INTERVAL = config.check_interval || 5 * 60 * 1000; // 每5分钟检查一次
 const BARK_URL = config.bark_url || '';
+const TG_BOT_TOKEN = config.tg_bot_token || '';
+const TG_CHAT_ID = config.tg_chat_id || '';
+
 let interval = null;
 let MAX_SEND_COUNT = config.max_send_count || 5;
 
@@ -39,7 +42,12 @@ async function checkDomains() {
             clearInterval(interval);
             return;
           }
-          sendBarkNotification(domain);
+          if (TG_BOT_TOKEN && TG_CHAT_ID) {
+            sendTelegramNotification(domain)
+          }
+          if (BARK_URL) {
+            sendBarkNotification(domain);
+          }
           MAX_SEND_COUNT--;
         } else {
           console.log(`域名 ${domain} 不可注册`);
@@ -100,6 +108,24 @@ function sendBarkNotification(domain) {
     })
     .catch((error) => {
       console.error('发送 Bark 通知时出错:', error);
+    });
+}
+
+// 发送 Telegram 通知
+function sendTelegramNotification(domain) {
+  const message = `域名 ${domain} 可注册通知`;
+  const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+  const params = {
+    chat_id: TG_CHAT_ID,
+    text: message,
+  };
+
+  axios.post(url, params)
+    .then((response) => {
+      console.log(`Telegram 通知发送成功: ${response.statusText}`);
+    })
+    .catch((error) => {
+      console.error('发送 Telegram 通知时出错:', error);
     });
 }
 

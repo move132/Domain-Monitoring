@@ -1,0 +1,7 @@
+src/*
+test/*
+playgrounds/*
+.babelrc
+.eslintrc.js
+rollup.config.js
+.editorconfig
