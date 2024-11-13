@@ -29,7 +29,7 @@ WORKDIR /app
 
 # 从 builder 阶段复制 dist 目录和应用代码
 COPY --from=builder /app/dist /app/dist
-COPY --from=builder /app/../config.toml /app/../config.toml
+COPY --from=builder /app/config.toml /app/config.toml
 COPY --from=builder /app/tld /app/tld
 
 # 暴露应用的端口（如果需要）
