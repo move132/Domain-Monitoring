@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+    domain-monitor:
+        image: move132/domain-monitor
+        volumes:
+            - '$(pwd)/config.toml:/app/config.toml'
+        tty: true
+        stdin_open: true
+        container_name: domain
