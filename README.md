@@ -33,7 +33,7 @@ check_interval = 300000
 
 ```bash
 # run
-docker run --name=domain -itd -v $(pwd)/config.toml:/app/config.toml domain-monitor
+docker run --name=domain -itd -v $(pwd)/config.toml:/app/config.toml move132/domain-monitor
 
 # log
 
