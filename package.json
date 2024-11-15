@@ -34,15 +34,16 @@
   },
   "dependencies": {
     "@iarna/toml": "^2.2.5",
-    "dayjs": "^1.11.13",
     "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
+    "nodemailer": "^6.9.16",
     "toml": "^3.0.0",
     "whois": "^2.14.2"
   },
   "devDependencies": {
+    "@dense-labs/eslint-config-ts": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
-    "@dense-labs/eslint-config-ts": "^1.0.1",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",

@@ -1,5 +1,9 @@
 import axios from 'axios'
 import {log} from '../utils'
+import {sendMail} from './mail'
+
+// 发送 email 通知
+export {sendMail}
 
 // 发送 Bark 通知
 export function sendBark({BARK_URL, domain, message = ''}: {BARK_URL: string; domain: string; message?: string}) {
