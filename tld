@@ -2,23 +2,20 @@
 com=whois.verisign-grs.com=No match for=
 edu=whois.verisign-grs.com=No match for=
 net=whois.verisign-grs.com=No match for=
-ad=whois.ripe.net=o entries found=
+ad=whois.ripe.net=bject does not exist=
 ae=whois.aeda.net.ae=No Data Found=
 af=whois.nic.af=No Object Found=
-ag=whois.nic.ag=NOT FOUND=
+ag=whois.nic.ag=not found=
 am=whois.amnic.net=o match=
 as=whois.nic.as=NOT FOUND=
 at=whois.nic.at=othing found=
-au=whois.audns.net.au=No Data Found=
+au=whois.audns.net.au=not found=
 be=whois.dns.be=AVAILABLE=
-//ai=whois.ai=not registered=
+ai=whois.ai=No results=
 ar=whois.nic.ar=dominio no se=
 aw=whois.nic.aw=is free=
 ax=whois.ax=Domain not found=
-al=whois.ripe.net=No entries found=
-az=whois.ripe.net=No entries found=
-ba=whois.ripe.net=No entries found=
-bg=whois.register.bg=does not exist in database=
+bg=whois.register.bg=available=
 bi=whois1.nic.bi=No Object Found=
 bingo=whois.donuts.co=Domain not found=
 bio=whois.ksregistry.net=bject does not exist=
@@ -30,7 +27,7 @@ buy=whois.afilias-srs.net=NOT FOUND=
 buzz=whois.nic.buzz=vailable=
 bw=whois.nic.net.bw=No Object Found=
 bz=whois.afilias-grs.info=NOT FOUND=
-//ca=whois.cira.ca=available=
+ca=whois.cira.ca=Not found=
 cat=whois.nic.cat=o match=
 cc=ccwhois.verisign-grs.com=No match for=
 cd=whois.nic.cd=No Object Found=
@@ -108,7 +105,7 @@ lv=whois.nic.lv= free=
 ly=whois.nic.ly=Not found=
 ma=whois.iam.net.ma=No Object Found=
 md=whois.nic.md=No match for=
-me=whois.nic.me=NOT FOUND=
+me=whois.nic.me=not found=
 mg=whois.nic.mg=No Object Found=
 mk=whois.marnet.mk=No entries found=
 ml=whois.dot.ml=ot known=

@@ -32,6 +32,7 @@ async function checkDomains() {
   const domains = DOMAINS.filter((v) => regex.test(v))
   if (domains.length === 0) {
     log(`🍐 没有要监听的的域名`)
+    log(`🍐 已经退出监控服务`)
     process.exit(0)
   }
   for (const domain of domains) {
@@ -45,15 +46,16 @@ async function checkDomains() {
         const tldInfo = tlds.find((v) => v.domainSuffix === suffix)
         const statusMessage = tldInfo ? tldInfo.statusMessage : null
         if (!statusMessage) {
-          log(`❌ ${domain}的TLD不存在`)
+          log(`❌ ${domain}，不支持此域名后缀`)
           return
         }
         if (data.includes(statusMessage)) {
           if (interval && domains.length === Object.keys(domainNotifCounts).length) {
             clearInterval(interval)
+            log(`✅ 所有域名都已可注册，退出监控服务`)
             return
           }
-          log(`✅ ${domain} 可注册`)
+          log(`🎉 ${domain} 可注册`)
           // 检查该域名是否已经达到通知次数上限
           if (domainNotifCounts[domain] && domainNotifCounts[domain] > MAX_SEND_COUNT) {
             log(`🍊 域名 ${domain} 已达到最大通知次数`)
@@ -94,6 +96,7 @@ async function checkDomains() {
 export function main() {
   if (CHECK_INTERVAL > 0 && CHECK_INTERVAL < 10 * 1000) {
     log(`❌ 时间间隔太短，请设置大于10秒的时间间隔`)
+    log(`❌ 已经退出监控服务`)
     process.exit(0)
   }
   // 定时检查

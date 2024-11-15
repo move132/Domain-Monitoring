@@ -1,5 +1,5 @@
-# 监听的域名
-domains = [] 
+# 监听的域名，会自动过滤不合法的域名
+domains = ['as.com', 'cnisx.az'] 
 # bark通知的url https://notify.xxxxx.com/ZWQUfXkN3yG25BsV6yVj4o/域名监控服务
 bark_url = ""
 
