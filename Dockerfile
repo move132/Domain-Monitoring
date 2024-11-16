@@ -14,7 +14,13 @@ RUN npm install --production
 RUN npm install tsup
 
 # 复制应用代码
-COPY . .
+#COPY . .
+COPY src ./src
+COPY tsup.config.ts ./
+COPY config.toml ./
+COPY tld ./
+COPY tsconfig.json ./
+COPY global.d.ts ./
 
 # 打包应用
 RUN npm run tsup
