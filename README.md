@@ -2,10 +2,10 @@
 
 域名监控服务：确保您不错过理想的域名
 
-在数字时代，一个好的域名就像是一块黄金地产。但理想的域名往往一出现就被抢注，您是否担心错过注册完美域名的机会？
+理想的域名往往一出现就被抢注，您是否担心错过注册完美域名的机会？
 
 ## configuration
-       
+
 **config.toml**
 
 ```toml
@@ -19,6 +19,18 @@ bark_url = ""
 # Telegram 通知
 tg_bot_token = ""
 tg_chat_id = ""
+
+# 邮箱通知
+smtp_server = 'smtp.example.com'
+
+# 根据服务商提供共的端口，本人测试 126邮箱是465端口
+smtp_port = 587
+smtp_username = 'your_email@example.com'
+
+# 授权密码, 非邮箱的登陆密码
+smtp_password = 'your_email_password'
+# 发送到邮箱
+recipient_email = 'recipient@example.com'
 
 # 成功发送次数，超过此数则不再通知
 max_send_count = 5 
@@ -48,4 +60,3 @@ docker logs <container-id> -f
 ## License
 
 MIT
-
