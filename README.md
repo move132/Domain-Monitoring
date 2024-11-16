@@ -23,7 +23,7 @@ tg_chat_id = ""
 # 邮箱通知
 smtp_server = 'smtp.example.com'
 
-# 根据服务商提供共的端口，本人测试 126邮箱是465端口
+# 根据服务商提供的端口，本人测试 126邮箱是465端口
 smtp_port = 587
 smtp_username = 'your_email@example.com'
 
