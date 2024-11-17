@@ -1,96 +1,83 @@
 import whois from 'whois'
 import {getConfig, type Config} from '../config'
 import {getTlds, type TldInfo} from '../tlds'
-import {sendBark, sendTg, sendMail} from '../notify'
-import {log} from '../utils'
+import {notify} from '../notify'
+import {log, success, error, info} from '../utils'
+import {registerDomain} from '../api'
 
 // 读取配置文件
 const config: Config = getConfig()
 const tlds: TldInfo[] = getTlds()
 
 // 配置
-const DOMAINS: string[] = config.domains || []
+const AUTO_REGISTER = config.auto_register // 是否开启自动注册
+const DYNADOT_API_KEY = config.dynadot_api_key // dynadot_api_key
+const DOMAINS = config.domains || []
 const CHECK_INTERVAL: number = config.check_interval || 5 * 60 * 1000 // 每5分钟检查一次
-const BARK_URL: string = config.bark_url || ''
-const TG_BOT_TOKEN: string = config.tg_bot_token || ''
-const TG_CHAT_ID: string = config.tg_chat_id || ''
+let MAX_SEND_COUNT: number = config.max_send_count || 5 // 通知成功发送次数，超过此数则不再通知
 
-const SMTP_SERVER: string = config.smtp_server || ''
-const SMTP_PORT: number = config.smtp_port || 0
-const SMTP_USERNAME: string = config.smtp_username || ''
-const SMTP_PASSWORD: string = config.smtp_password || ''
-const RECIPIENT_EMAIL: string = config.recipient_email || ''
-
-let interval: number = null
-let MAX_SEND_COUNT: number = config.max_send_count || 5
 // 存储每个域名的通知次数
 let domainNotifCounts: Record<string, number> = {}
+let interval: number = null
+
 // 检查域名状态
 async function checkDomains() {
   // 正确的域名格式
   const regex = /^(?!\\-)(?:[a-zA-Z0-9-]{1,63}(?<!-))\.([a-zA-Z]{2,63})$/
   const domains = DOMAINS.filter((v) => regex.test(v))
   if (domains.length === 0) {
-    log(`🍐 没有要监听的的域名`)
-    log(`🍐 已经退出监控服务`)
+    info(`🍋 没有要监听的的域名`)
+    info(`🍋 退出监控服务`)
     process.exit(0)
   }
   for (const domain of domains) {
     try {
-      whois.lookup(domain, (err: Error | null, data: string) => {
+      whois.lookup(domain, async (err: Error | null, data: string) => {
         if (err) {
-          log(`❌ 检查 ${domain} 时出错: ${err}`)
+          error(`检查 ${domain} 时出错: ${err}`)
           return
         }
         const suffix = domain.split('.').pop()
         const tldInfo = tlds.find((v) => v.domainSuffix === suffix)
         const statusMessage = tldInfo ? tldInfo.statusMessage : null
         if (!statusMessage) {
-          log(`❌ ${domain}，不支持此域名后缀`)
+          error(`${domain}，不支持此域名后缀`)
           return
         }
-        if (data.includes(statusMessage)) {
-          if (interval && domains.length === Object.keys(domainNotifCounts).length) {
-            clearInterval(interval)
-            log(`✅ 所有域名都已可注册，退出监控服务`)
-            return
-          }
-          log(`🎉 ${domain} 可注册`)
-          // 检查该域名是否已经达到通知次数上限
-          if (domainNotifCounts[domain] && domainNotifCounts[domain] > MAX_SEND_COUNT) {
-            log(`🍊 域名 ${domain} 已达到最大通知次数`)
-            return
-          }
-          if (BARK_URL) {
-            sendBark({BARK_URL, domain})
-          }
-          if (TG_BOT_TOKEN && TG_CHAT_ID) {
-            sendTg({TG_BOT_TOKEN, TG_CHAT_ID, domain})
-          }
-          if (SMTP_SERVER && SMTP_PORT && SMTP_USERNAME && SMTP_PASSWORD && RECIPIENT_EMAIL) {
-            sendMail([domain], {
-              smtp_server: SMTP_SERVER,
-              smtp_port: SMTP_PORT,
-              smtp_username: SMTP_USERNAME,
-              smtp_password: SMTP_PASSWORD,
-              recipient_email: RECIPIENT_EMAIL
-            })
-          }
-          // 更新通知次数
-          if (domainNotifCounts[domain]) {
-            domainNotifCounts[domain] = domainNotifCounts[domain] + 1
-          } else {
-            domainNotifCounts[domain] = 1
-          }
-          log(`✅ ${domain} 已经发送通知`)
-        } else {
-          log(`🍍 域名 ${domain} 不可注册`)
+        if (!data.includes(statusMessage)) {
+          log(`域名 ${domain} 不可注册`)
+          return
+        }
+        if (interval && domains.length === Object.keys(domainNotifCounts).length) {
+          clearInterval(interval)
+          success(`🎉 所有域名都已可注册，退出监控服务`)
+          return
+        }
+        success(`${domain} 可注册`)
+        sendNotify(domain)
+
+        if (AUTO_REGISTER && DYNADOT_API_KEY) {
+          const res = await registerDomain(domain)
+          res && info(`🍊 ${JSON.stringify(res)}`)
         }
       })
-    } catch (error) {
-      log(`❌ 检查 ${domain} 时出错: ${error}`)
+    } catch (e) {
+      error(`检查 ${domain} 时出错: ${e}`)
     }
   }
+}
+
+async function sendNotify(domain: string) {
+  // 检查该域名是否已经达到通知次数上限
+  if (domainNotifCounts[domain] && domainNotifCounts[domain] > MAX_SEND_COUNT) {
+    info(`🍊 域名 ${domain} 已达到最大通知次数`)
+    return
+  }
+  // 发送通知
+  await notify(domain)
+
+  // 更新通知次数
+  domainNotifCounts[domain] = domainNotifCounts[domain] ? domainNotifCounts[domain] + 1 : 1
 }
 
 export function main() {

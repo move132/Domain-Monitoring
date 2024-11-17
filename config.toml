@@ -1,5 +1,12 @@
 # 监听的域名，会自动过滤不合法的域名
-domains = ['as.com', 'cnisx.az'] 
+domains = ['consolog.com', 'cnisx.az', 'nicew.me'] 
+
+# Dynadot API
+# 是否开启自动注册（开启后，如果余额充足并且域名可以注册时，将会扣除余额）
+auto_register = false
+# dynadot_api_key 在 https://www.dynadot.com/zh/account/domain/setting/api.html 获取
+dynadot_api_key = ''
+
 # bark通知的url https://notify.xxxxx.com/ZWQUfXkN3yG25BsV6yVj4o/域名监控服务
 bark_url = ""
 
@@ -15,9 +22,9 @@ smtp_port = 587
 smtp_username = 'your_email@example.com'
 
 # 授权密码, 非邮箱的登陆密码
-smtp_password = 'your_email_password'
+smtp_password = 'auth_password'
 # 发送到邮箱
-recipient_email = 'recipient@example.com'
+recipient_email = ''
 
 # 成功发送次数，超过此数则不再通知
 max_send_count = 5 

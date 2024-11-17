@@ -4,6 +4,10 @@
 
 理想的域名往往一出现就被抢注，您是否担心错过注册完美域名的机会？
 
+- 支持自动监控
+- 支持自动注册域名
+- 支持Bark、Telegram、email通知
+
 ## configuration
 
 **config.toml**
@@ -14,11 +18,17 @@
 domains = [] 
 # bark通知的url https://notify.xxxxx.com/ZWQUfXkN3yG25BsV6yVj4o/域名监控服务
 
-bark_url = ""
+bark_url = ''
+
+# Dynadot API
+# 是否开启自动注册（开启后如果余额充足，将自动注册域名）
+auto_register = true
+# 请在https://www.dynadot.com/zh/account/domain/setting/api.html获取dynadot_api_key
+dynadot_api_key = ''
 
 # Telegram 通知
-tg_bot_token = ""
-tg_chat_id = ""
+tg_bot_token = ''
+tg_chat_id = ''
 
 # 邮箱通知
 smtp_server = 'smtp.example.com'

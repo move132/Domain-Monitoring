@@ -1,34 +1,39 @@
 import nodemailer from 'nodemailer'
-import {type Mail} from '../config'
-import {log} from '../utils'
+import {error} from '../utils'
+import {getConfig, type Mail} from '../config'
 
-async function sendMail(domains: string[], cfg: Mail) {
+// 读取配置文件
+const {smtp_server, smtp_port, smtp_username, smtp_password, recipient_email}: Mail = getConfig()
+
+async function sendMail({domain, message = ''}: {domain: string; message?: string}) {
+  if (!smtp_server || !smtp_port || !smtp_username || !smtp_password || !recipient_email) return
+
   const transporter = nodemailer.createTransport({
-    host: cfg.smtp_server,
-    port: cfg.smtp_port,
-    secure: cfg.smtp_port === 465,
+    host: smtp_server,
+    port: smtp_port,
+    secure: smtp_port === 465,
     auth: {
-      user: cfg.smtp_username,
-      pass: cfg.smtp_password
+      user: smtp_username,
+      pass: smtp_password
     }
   })
 
   const mailOptions = {
-    from: cfg.smtp_username,
-    to: cfg.recipient_email,
+    from: smtp_username,
+    to: recipient_email,
     subject: '域名状态变更提醒',
-    html: generateEmailBody(domains)
+    html: generateEmailBody({domain, message})
   }
   try {
     await transporter.sendMail(mailOptions)
-  } catch (error) {
-    log(`邮件发送失败：${error}`)
+  } catch (e) {
+    error(`${domain} 邮件发送失败：${e}`)
   }
 }
 
-function generateEmailBody(domains: string[]) {
-  const domainName = domains[0] || '未知域名'
-  let body = `
+function generateEmailBody({domain, message = ''}: {domain: string; message?: string}) {
+  const domainName = domain || '未知域名'
+  const body = `
     <!DOCTYPE html>
     <html lang="zh-CN">
     <head>
@@ -109,7 +114,7 @@ function generateEmailBody(domains: string[]) {
             }
 
             .footer {
-              padding: 20px;
+              padding: 15px;
               font-size: 14px;
               color: #666666;
             }
