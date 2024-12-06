@@ -8,14 +8,17 @@
 - 支持自动注册域名
 - 支持Bark、Telegram、email通知
 
-## configuration
+## Use
 
-**config.toml**
+在当前目录下新增配置文件*config.toml*内容如下
 
-```toml
+> 注意domains = [] 时不会启动服务
+
+```bash
 
 # 监听的域名
-domains = [] 
+#domains = [] 
+domains = ['consolog.com', 'cnisx.az', 'nicew.me'] 
 # bark通知的url https://notify.xxxxx.com/ZWQUfXkN3yG25BsV6yVj4o/域名监控服务
 
 bark_url = ''
@@ -51,9 +54,8 @@ check_interval = 300000
 
 ```
 
-## Use
-
 ```bash
+
 # run
 docker run --name=domain -itd -v $(pwd)/config.toml:/app/config.toml move132/domain-monitor
 
